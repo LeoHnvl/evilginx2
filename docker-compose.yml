@@ -1,0 +1,7 @@
+---
+services:
+  proxy-baby:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    
