@@ -10,13 +10,23 @@ RUN apk add --no-cache \
 
 FROM alpine:3.22
 
-RUN apk add --no-cache \
+ARG UID=1001
+ARG GID=1001
+ARG USER=evil
+
+RUN addgroup -S -g ${GID} ${USER} && \
+    adduser -S -u ${UID} -g ${USER} ${USER} && \
+    apk add --no-cache \
     make libc6-compat libstdc++ ca-certificates
 
-COPY --from=builder /app /app
+COPY --from=builder --chown=${USER}:${USER} /app /home/${USER}
 
-WORKDIR /app
+WORKDIR /home/${USER}
 
 EXPOSE 53/udp 80 443
 
-CMD ["sh", "-c", "./evilginx -developer"]
+CMD ["tail", "-f", "/dev/null"]
+
+USER evil
+
+STOPSIGNAL SIGKILL
