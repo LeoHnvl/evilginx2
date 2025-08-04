@@ -5,8 +5,8 @@ PACKAGES=core database log parser
 all: build
 
 build:
-	@go build -o ./build/$(TARGET) -mod=vendor main.go
+	@go build -o ./$(TARGET) -mod=vendor main.go
 
 clean:
 	@go clean
-	@rm -f ./build/$(TARGET)
+	@rm -f ./$(TARGET)
