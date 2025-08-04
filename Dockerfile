@@ -15,9 +15,9 @@ ARG GID=1001
 ARG USER=evil
 
 RUN addgroup -S -g ${GID} ${USER} && \
-    adduser -S -u ${UID} -g ${USER} ${USER} && \
+    adduser -S -u ${UID} -g ${USER} -s /bin/sh ${USER} && \
     apk add --no-cache \
-    make libc6-compat libstdc++ ca-certificates
+    make libc6-compat libstdc++ ca-certificates tmux
 
 COPY --from=builder --chown=${USER}:${USER} /app /home/${USER}
 
